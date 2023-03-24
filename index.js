@@ -19,10 +19,29 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-// your first API endpoint...
-app.get('/api/hello', function (req, res) {
-  res.json({ greeting: 'hello API' });
+// // your first API endpoint...
+// app.get('/api/hello', function (req, res) {
+//   res.json({ greeting: 'hello API' });
+// });
+
+app.get('/api/whoami', (req, res) => {
+  // store ip, pref language, software from req 
+  const ipaddress = req.ip;
+  const prefLanguage = req.acceptsLanguages()[0];
+  const software = req.headers['user-agent'];
+  
+  // store in json object
+  const clientInfo = {
+    "ipaddress": ipaddress,
+    "language": prefLanguage,
+    "software": software
+  };
+
+  // get the response
+  res.json(clientInfo);
 });
+
+
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT || 3000, function () {
